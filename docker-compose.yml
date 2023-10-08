@@ -1,0 +1,29 @@
+version: '3'
+services:
+  web-laravel:
+    build:
+      context: ./web-laravel
+      dockerfile: Dockerfile
+    container_name: web-laravel
+    networks:
+      - mynetwork
+    volumes:
+      - ./web-laravel:/var/www/html:z
+    ports:
+      - "8080:80"
+    depends_on:
+      - db-mysql
+  db-mysql:
+    build:
+      context: ./db-mysql
+      dockerfile: Dockerfile
+    container_name: db-mysql
+    networks:
+      - mynetwork
+    environment:
+      MYSQL_ROOT_PASSWORD: 1171007
+      MYSQL_DATABASE: prueba
+      MYSQL_USER: victor
+networks:
+  mynetwork:
+    driver: bridge
